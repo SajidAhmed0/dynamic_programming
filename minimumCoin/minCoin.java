@@ -12,6 +12,7 @@ public class MinCoin {
         MinCoin minCoin = new MinCoin();
 
         System.out.println(minCoin.minimum_coins(m, coins, new HashMap<Integer, Integer>()));
+        System.out.println(minCoin.bottomUpMinimumCoin(m, coins));
 
     }
 
@@ -43,5 +44,19 @@ public class MinCoin {
         if (b == null)
             return a;
         return Math.min(a, b);
+    }
+
+    public Integer bottomUpMinimumCoin(Integer m, Integer[] coins) {
+        Map<Integer, Integer> memo = new HashMap<Integer, Integer>();
+        memo.put(0, 0);
+        for (Integer i = 1; i <= m; i++) {
+            for (Integer coin : coins) {
+                Integer subProblem = i - coin;
+                if (subProblem < 0)
+                    continue;
+                memo.put(i, min_ignore_null(memo.get(i), memo.get(subProblem) + 1));
+            }
+        }
+        return memo.get(m);
     }
 }
