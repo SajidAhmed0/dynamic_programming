@@ -1,8 +1,14 @@
 package minimumCoin;
 
-public class minCoin {
+public class MinCoin {
 
     public static void main(String args[]) {
+        Integer[] coins = { 9, 10, 20, 5 };
+        Integer m = 45;
+
+        MinCoin minCoin = new MinCoin();
+
+        System.out.println(minCoin.minimum_coins(m, coins));
 
     }
 
@@ -16,7 +22,9 @@ public class minCoin {
                 Integer subProblem = m - coin;
                 if (subProblem < 0)
                     continue;
-                answer = min_ignore_null(answer, minimum_coins(subProblem, coins) + 1);
+                Integer subAns = minimum_coins(subProblem, coins);
+                if(subAns != null)
+                    answer = min_ignore_null(answer, subAns + 1);
             }
         }
         return answer;
